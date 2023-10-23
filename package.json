@@ -1,0 +1,27 @@
+{
+  "name": "desafio03-solid",
+  "version": "1.0.0",
+  "description": "Este desafio faz parte do módulo 3 da trilha de Node.js do Ignite da Rocketseat.",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts",
+    "start": "node build/src.js",
+    "build": "tsup src --out-dir build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "2.1.0",
+    "@types/node": "20.8.7",
+    "eslint": "8.52.0",
+    "tsup": "7.2.0",
+    "tsx": "3.14.0",
+    "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "dotenv": "16.3.1",
+    "fastify": "4.24.3",
+    "zod": "3.22.4"
+  }
+}
