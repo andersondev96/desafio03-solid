@@ -31,28 +31,17 @@ model Pet {
   id               String   @id @default(uuid())
   name             String
   description      String
-  energy           Int
-  wide_environment Boolean
-  size             String
   year             Int
+  size             String
+  energy           Int
   independence     String
+  wide_environment Boolean
+  requirements     String[]
+  images           String[]
   created_at       DateTime @default(now())
 
   organization    Organization @relation(fields: [organization_id], references: [id])
   organization_id String
-  images          Images[]
 
   @@map("pets")
-}
-
-model Images {
-  id         String   @id @default(uuid())
-  title      String
-  url        String
-  created_at DateTime @default(now())
-
-  Pet    Pet?    @relation(fields: [pet_id], references: [id])
-  pet_id String?
-
-  @@map("images")
 }
