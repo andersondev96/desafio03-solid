@@ -1,38 +1,48 @@
-import { Organization, Prisma } from "@prisma/client";
-import { OrganizationRepository } from "../organization-repository";
+import { Organization, Prisma } from '@prisma/client'
+import { randomUUID } from 'node:crypto'
+import { OrganizationsRepository } from '../organizations-repository'
 
-export class InMemoryOrganizationRepository implements OrganizationRepository {
+export class InMemoryOrganizationsRepository
+  implements OrganizationsRepository
+{
+  public organizations: Organization[] = []
 
-    public organizations: Organization[] = []
+  async findById(id: string) {
+    const organization = this.organizations.find((item) => item.id === id)
 
-    async findByEmail(email: string) {
-        const organization = this.organizations.find((item) => item.email === email)
-
-        if (!organization) {
-            return null
-        }
-
-        return organization
+    if (!organization) {
+      return null
     }
 
-     async create(data: Prisma.OrganizationCreateInput) {
+    return organization
+  }
 
-        const organization = {
-            id: 'organization-1',
-            responsible: data.responsible,
-            email: data.email,
-            cep: data.cep,
-            address: data.address,
-            latitude: new Prisma.Decimal(data.latitude.toString()),
-            longitude: new Prisma.Decimal(data.longitude.toString()),
-            whatsapp: data.whatsapp ?? null,
-            password_hash: data.password_hash,
-            created_at: new Date()
-        }
+  async findByEmail(email: string) {
+    const organization = this.organizations.find((item) => item.email === email)
 
-        this.organizations.push(organization)
-
-        return organization
+    if (!organization) {
+      return null
     }
 
+    return organization
+  }
+
+  async create(data: Prisma.OrganizationCreateInput) {
+    const organization = {
+      id: randomUUID(),
+      responsible: data.responsible,
+      email: data.email,
+      cep: data.cep,
+      address: data.address,
+      latitude: new Prisma.Decimal(data.latitude.toString()),
+      longitude: new Prisma.Decimal(data.longitude.toString()),
+      whatsapp: data.whatsapp ?? null,
+      password_hash: data.password_hash,
+      created_at: new Date(),
+    }
+
+    this.organizations.push(organization)
+
+    return organization
+  }
 }

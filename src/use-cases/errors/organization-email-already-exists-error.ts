@@ -1,6 +1,5 @@
-
 export class OrganizationEmailAlreadyExistsError extends Error {
-    constructor() {
-        super('E-mail already exists.')
-    }
+  constructor() {
+    super('E-mail already exists.')
+  }
 }

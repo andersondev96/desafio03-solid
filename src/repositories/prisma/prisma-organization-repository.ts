@@ -1,25 +1,33 @@
-import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
-import { OrganizationRepository } from "../organization-repository";
+import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
+import { OrganizationsRepository } from '../organizations-repository'
 
-export class PrismaOrganizationRepository implements OrganizationRepository{
+export class PrismaOrganizationsRepository implements OrganizationsRepository {
+  async findById(id: string) {
+    const organization = await prisma.organization.findUnique({
+      where: {
+        id,
+      },
+    })
 
-    async findByEmail(email: string) {
-        const organization = await prisma.organization.findUnique({
-            where: {
-                email
-            }
-        })
+    return organization
+  }
 
-        return organization
-    }
+  async findByEmail(email: string) {
+    const organization = await prisma.organization.findUnique({
+      where: {
+        email,
+      },
+    })
 
-    async create(data: Prisma.OrganizationCreateInput) {
-       const organization = await prisma.organization.create({
-        data
-       })
+    return organization
+  }
 
-       return organization
-    }
+  async create(data: Prisma.OrganizationCreateInput) {
+    const organization = await prisma.organization.create({
+      data,
+    })
 
-} 
+    return organization
+  }
+}

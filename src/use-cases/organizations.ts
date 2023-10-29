@@ -1,59 +1,58 @@
-import { OrganizationRepository } from "@/repositories/organization-repository"
-import { Organization } from "@prisma/client"
-import { hash } from "bcryptjs"
-import { OrganizationEmailAlreadyExistsError } from "./errors/organization-email-already-exists-error"
+import { OrganizationsRepository } from '@/repositories/organizations-repository'
+import { Organization } from '@prisma/client'
+import { hash } from 'bcryptjs'
+import { OrganizationEmailAlreadyExistsError } from './errors/organization-email-already-exists-error'
 
 interface OrganizationUseCaseRequest {
-    responsible: string
-    email: string
-    cep: string
-    address: string
-    latitude: number,
-    longitude: number,
-    whatsapp: string
-    password: string
+  responsible: string
+  email: string
+  cep: string
+  address: string
+  latitude: number
+  longitude: number
+  whatsapp: string
+  password: string
 }
 
 interface OrganizationUseCaseReturn {
-    organization: Organization
+  organization: Organization
 }
 
-
 export class OrganizationUseCase {
-    constructor(private organizationRepository: OrganizationRepository) {}
+  constructor(private organizationsRepository: OrganizationsRepository) {}
 
-    async execute({
-        responsible,
-        email,
-        cep,
-        address,
-        latitude,
-        longitude,
-        whatsapp,
-        password
-    }: OrganizationUseCaseRequest): Promise<OrganizationUseCaseReturn> {
-
+  async execute({
+    responsible,
+    email,
+    cep,
+    address,
+    latitude,
+    longitude,
+    whatsapp,
+    password,
+  }: OrganizationUseCaseRequest): Promise<OrganizationUseCaseReturn> {
     const password_hash = await hash(password, 6)
 
-    const emailAlreadyExists = await this.organizationRepository.findByEmail(email)
-    
-      if (emailAlreadyExists) {
-       throw new OrganizationEmailAlreadyExistsError()
-      }
+    const emailAlreadyExists =
+      await this.organizationsRepository.findByEmail(email)
 
-      const organization = await this.organizationRepository.create({
-          responsible,
-          email,
-          cep,
-          address,
-          latitude,
-          longitude,
-          whatsapp,
-          password_hash,
-        })
-
-        return {
-            organization
-        }
+    if (emailAlreadyExists) {
+      throw new OrganizationEmailAlreadyExistsError()
     }
+
+    const organization = await this.organizationsRepository.create({
+      responsible,
+      email,
+      cep,
+      address,
+      latitude,
+      longitude,
+      whatsapp,
+      password_hash,
+    })
+
+    return {
+      organization,
+    }
+  }
 }
