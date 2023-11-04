@@ -1,3 +1,4 @@
+import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
 import { makePetUseCase } from '@/use-cases/factories/make-pet-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -33,20 +34,28 @@ export async function Pets(request: FastifyRequest, reply: FastifyReply) {
 
   const { organization_id } = petParamsSchema.parse(request.params)
 
-  const petUseCase = makePetUseCase()
+  try {
+    const petUseCase = makePetUseCase()
 
-  await petUseCase.execute({
-    name,
-    description,
-    petAge,
-    petSize,
-    petEnergyLevel,
-    petIndependenceLevel,
-    petSpaceNeed,
-    requirements,
-    images,
-    organization_id,
-  })
+    await petUseCase.execute({
+      name,
+      description,
+      petAge,
+      petSize,
+      petEnergyLevel,
+      petIndependenceLevel,
+      petSpaceNeed,
+      requirements,
+      images,
+      organization_id,
+    })
 
-  return reply.status(201).send()
+    return reply.status(201).send()
+  } catch (err) {
+    if (err instanceof ResourceNotFoundError) {
+      return reply.status(400).send({ err: err.message })
+    }
+
+    throw err
+  }
 }
