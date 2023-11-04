@@ -1,10 +1,17 @@
-import { Pet, Prisma } from '@prisma/client'
+import {
+  Pet,
+  PetAge,
+  PetEnergyLevel,
+  PetIndependenceLevel,
+  PetSize,
+  Prisma,
+} from '@prisma/client'
 
 export interface FilterValues {
-  petAge: string
-  petSize: string
-  petEnergyLevel: string
-  petIndependenceLevel: string
+  petAge: PetAge
+  petSize: PetSize
+  petEnergyLevel: PetEnergyLevel
+  petIndependenceLevel: PetIndependenceLevel
 }
 
 export interface PetsRepository {
