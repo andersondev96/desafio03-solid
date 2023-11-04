@@ -14,7 +14,7 @@ let sut: GetPetsUseCase
 describe('Get pets use case', () => {
   beforeEach(() => {
     organizationsRepository = new InMemoryOrganizationsRepository()
-    petsRepository = new InMemoryPetsRepository()
+    petsRepository = new InMemoryPetsRepository(organizationsRepository)
     sut = new GetPetsUseCase(petsRepository)
   })
 
@@ -34,11 +34,11 @@ describe('Get pets use case', () => {
       name: 'Buddy',
       description:
         'Buddy is a friendly and playful pet looking for a loving home. He loves to go on long walks and play fetch in the park.',
-      year: 2,
-      size: 'Medium',
-      energy: 4,
-      independence: 'Low',
-      wide_environment: true,
+      petAge: 'ADULT',
+      petSize: 'BIG',
+      petEnergyLevel: 'HIGH',
+      petIndependenceLevel: 'LOW',
+      petSpaceNeed: 'BIG',
       requirements: ['Regular exercise', 'Grooming', 'Obedience training'],
       images: ['buddy_image1.jpg', 'buddy_image2.jpg', 'buddy_image3.jpg'],
       organization_id: organizationCreated.id,

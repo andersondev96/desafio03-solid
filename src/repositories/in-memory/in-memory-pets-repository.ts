@@ -1,8 +1,11 @@
 import { Pet, Prisma } from '@prisma/client'
 import { randomUUID } from 'crypto'
-import { PetsRepository } from '../pets-repository'
+import { OrganizationsRepository } from '../organizations-repository'
+import { FilterValues, PetsRepository } from '../pets-repository'
 
 export class InMemoryPetsRepository implements PetsRepository {
+  constructor(public organizationsRepository: OrganizationsRepository) {}
+
   public pets: Pet[] = []
 
   async findById(id: string) {
@@ -15,8 +18,34 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findByCity(city: string) {
-    return null
+  async findByOrganization(organization_id: string) {
+    const pets = this.pets.filter(
+      (item) => item.organization_id === organization_id,
+    )
+
+    return pets
+  }
+
+  async filters(city: string, data: FilterValues) {
+    const organizations = (
+      await this.organizationsRepository.findByCity(city)
+    ).reduce((acc, org) => [org.id, ...acc], [] as string[])
+
+    this.pets = this.pets.filter((pet) =>
+      organizations.includes(pet.organization_id),
+    )
+
+    if (data) {
+      this.pets = this.pets.filter(
+        (item) =>
+          item.petSize === data.petSize ||
+          item.petEnergyLevel === data.petEnergyLevel ||
+          item.petIndependenceLevel === data.petIndependenceLevel ||
+          item.petAge === data.petAge,
+      )
+    }
+
+    return this.pets
   }
 
   async create(data: Prisma.PetUncheckedCreateInput) {
@@ -24,15 +53,15 @@ export class InMemoryPetsRepository implements PetsRepository {
       id: randomUUID(),
       name: data.name,
       description: data.description,
-      year: data.year,
-      size: data.size,
-      energy: data.energy,
-      independence: data.independence,
-      wide_environment: data.wide_environment,
-      requirements: [],
-      images: [],
-      organization_id: data.organization_id,
+      petAge: data.petAge,
+      petSize: data.petSize,
+      petEnergyLevel: data.petEnergyLevel,
+      petIndependenceLevel: data.petIndependenceLevel,
+      petSpaceNeed: data.petSpaceNeed,
+      requirements: Array.isArray(data.requirements) ? data.requirements : [],
+      images: Array.isArray(data.images) ? data.images : [],
       created_at: new Date(),
+      organization_id: data.organization_id,
     }
 
     this.pets.push(pet)

@@ -22,6 +22,7 @@ describe('Organizations use case', () => {
       address: 'Rua principal',
       latitude: 999,
       longitude: 999,
+      city: 'São Paulo',
       whatsapp: '99999999',
       password: '123456',
     })

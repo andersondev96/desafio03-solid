@@ -1,16 +1,23 @@
 import { OrganizationsRepository } from '@/repositories/organizations-repository'
 import { PetsRepository } from '@/repositories/pets-repository'
-import { Pet } from '@prisma/client'
+import {
+  Pet,
+  PetAge,
+  PetEnergyLevel,
+  PetIndependenceLevel,
+  PetSize,
+  PetSpaceNeed,
+} from '@prisma/client'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface PetUseCaseRequest {
   name: string
   description: string
-  year: number
-  size: string
-  energy: number
-  independence: string
-  wide_environment: boolean
+  petAge: PetAge
+  petSize: PetSize
+  petEnergyLevel: PetEnergyLevel
+  petIndependenceLevel: PetIndependenceLevel
+  petSpaceNeed: PetSpaceNeed
   requirements: string[]
   images: string[]
   organization_id: string
@@ -29,11 +36,11 @@ export class PetUseCase {
   async execute({
     name,
     description,
-    year,
-    size,
-    energy,
-    independence,
-    wide_environment,
+    petAge,
+    petSize,
+    petEnergyLevel,
+    petIndependenceLevel,
+    petSpaceNeed,
     requirements,
     images,
     organization_id,
@@ -49,11 +56,11 @@ export class PetUseCase {
     const pet = await this.petsRepository.create({
       name,
       description,
-      year,
-      size,
-      energy,
-      independence,
-      wide_environment,
+      petAge,
+      petSize,
+      petEnergyLevel,
+      petIndependenceLevel,
+      petSpaceNeed,
       requirements,
       images,
       organization_id,

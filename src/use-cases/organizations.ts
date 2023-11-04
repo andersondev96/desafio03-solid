@@ -10,6 +10,7 @@ interface OrganizationUseCaseRequest {
   address: string
   latitude: number
   longitude: number
+  city?: string
   whatsapp: string
   password: string
 }
@@ -28,6 +29,7 @@ export class OrganizationUseCase {
     address,
     latitude,
     longitude,
+    city,
     whatsapp,
     password,
   }: OrganizationUseCaseRequest): Promise<OrganizationUseCaseReturn> {
@@ -47,6 +49,7 @@ export class OrganizationUseCase {
       address,
       latitude,
       longitude,
+      city,
       whatsapp,
       password_hash,
     })
