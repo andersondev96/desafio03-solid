@@ -3,7 +3,7 @@ import { ListPetsByCity } from '../list-pets-by-city'
 
 export function makeListPetsByCityUseCase() {
   const petsRepository = new PrismaPetsRepository()
-  const authenticationUseCase = new ListPetsByCity(petsRepository)
+  const listPetsByCityUseCase = new ListPetsByCity(petsRepository)
 
-  return authenticationUseCase
+  return listPetsByCityUseCase
 }

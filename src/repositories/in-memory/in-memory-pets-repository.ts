@@ -41,7 +41,8 @@ export class InMemoryPetsRepository implements PetsRepository {
           item.petSize === data.petSize ||
           item.petEnergyLevel === data.petEnergyLevel ||
           item.petIndependenceLevel === data.petIndependenceLevel ||
-          item.petAge === data.petAge,
+          item.petAge === data.petAge ||
+          item.petSpaceNeed === data.petSpaceNeed,
       )
     }
 

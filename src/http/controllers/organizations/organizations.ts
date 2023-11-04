@@ -1,5 +1,5 @@
 import { OrganizationEmailAlreadyExistsError } from '@/use-cases/errors/organization-email-already-exists-error'
-import { makeOrganizationUseCase } from '@/use-cases/factories/make-organization-use-case'
+import { makeOrganizationUseCase } from '@/use-cases/factories/make-organizations-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 

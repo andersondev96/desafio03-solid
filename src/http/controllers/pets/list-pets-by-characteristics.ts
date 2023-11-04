@@ -27,7 +27,7 @@ export async function ListPetsByCharacteristics(
   const listPetsByCharacteristicsUseCase =
     makeListPetsByCharacteristicsUseCase()
 
-  await listPetsByCharacteristicsUseCase.execute({
+  const pets = await listPetsByCharacteristicsUseCase.execute({
     city,
     filters: {
       petAge,
@@ -38,5 +38,7 @@ export async function ListPetsByCharacteristics(
     },
   })
 
-  return reply.status(200).send()
+  return reply.status(200).send({
+    pets,
+  })
 }

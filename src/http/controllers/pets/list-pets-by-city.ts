@@ -14,9 +14,11 @@ export async function ListPetsByCity(
 
   const listPetsByCityUseCase = makeListPetsByCityUseCase()
 
-  await listPetsByCityUseCase.execute({
+  const pets = await listPetsByCityUseCase.execute({
     city,
   })
 
-  return reply.status(200).send()
+  return reply.status(200).send({
+    pets,
+  })
 }

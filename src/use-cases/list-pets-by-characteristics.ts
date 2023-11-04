@@ -1,12 +1,19 @@
 import { PetsRepository } from '@/repositories/pets-repository'
-import { Pet } from '@prisma/client'
+import {
+  Pet,
+  PetAge,
+  PetEnergyLevel,
+  PetIndependenceLevel,
+  PetSize,
+  PetSpaceNeed,
+} from '@prisma/client'
 
 interface FiltersRequest {
-  petAge: string
-  petSize: string
-  petEnergyLevel: string
-  petIndependenceLevel: string
-  petSpaceNeed: string
+  petAge: PetAge
+  petSize: PetSize
+  petEnergyLevel: PetEnergyLevel
+  petIndependenceLevel: PetIndependenceLevel
+  petSpaceNeed: PetSpaceNeed
 }
 
 interface ListPetsByCharacteristicsUseCaseRequest {

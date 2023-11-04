@@ -3,9 +3,9 @@ import { ListPetsByCharacteristicsUseCase } from '../list-pets-by-characteristic
 
 export function makeListPetsByCharacteristicsUseCase() {
   const petsRepository = new PrismaPetsRepository()
-  const authenticationUseCase = new ListPetsByCharacteristicsUseCase(
+  const listPetsByCharacteristicsUseCase = new ListPetsByCharacteristicsUseCase(
     petsRepository,
   )
 
-  return authenticationUseCase
+  return listPetsByCharacteristicsUseCase
 }

@@ -5,17 +5,17 @@ import { PetsRepository } from '@/repositories/pets-repository'
 import { hash } from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
-import { GetPetsUseCase } from './get-pets'
+import { GetPetUseCase } from './get-pet'
 
 let organizationsRepository: OrganizationsRepository
 let petsRepository: PetsRepository
-let sut: GetPetsUseCase
+let sut: GetPetUseCase
 
 describe('Get pets use case', () => {
   beforeEach(() => {
     organizationsRepository = new InMemoryOrganizationsRepository()
     petsRepository = new InMemoryPetsRepository(organizationsRepository)
-    sut = new GetPetsUseCase(petsRepository)
+    sut = new GetPetUseCase(petsRepository)
   })
 
   it('should be able get pets', async () => {

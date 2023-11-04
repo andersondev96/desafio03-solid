@@ -16,10 +16,6 @@ export async function Pets(request: FastifyRequest, reply: FastifyReply) {
     images: z.string().array(),
   })
 
-  const petParamsSchema = z.object({
-    organization_id: z.string(),
-  })
-
   const {
     name,
     description,
@@ -31,8 +27,6 @@ export async function Pets(request: FastifyRequest, reply: FastifyReply) {
     requirements,
     images,
   } = petBodySchema.parse(request.body)
-
-  const { organization_id } = petParamsSchema.parse(request.params)
 
   try {
     const petUseCase = makePetUseCase()
@@ -47,7 +41,7 @@ export async function Pets(request: FastifyRequest, reply: FastifyReply) {
       petSpaceNeed,
       requirements,
       images,
-      organization_id,
+      organization_id: request.user.sub,
     })
 
     return reply.status(201).send()

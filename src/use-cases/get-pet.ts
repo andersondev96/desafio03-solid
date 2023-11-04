@@ -2,7 +2,7 @@ import { PetsRepository } from '@/repositories/pets-repository'
 import { Pet } from '@prisma/client'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
-export class GetPetsUseCase {
+export class GetPetUseCase {
   constructor(private petsRepository: PetsRepository) {}
 
   async execute(pet_id: string): Promise<Pet> {

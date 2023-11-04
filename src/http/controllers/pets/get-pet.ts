@@ -1,9 +1,9 @@
 import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
-import { makeGetPetsUseCase } from '@/use-cases/factories/make-get-pets-use-case'
+import { makeGetPetUseCase } from '@/use-cases/factories/make-get-pet-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function GetPets(request: FastifyRequest, reply: FastifyReply) {
+export async function GetPet(request: FastifyRequest, reply: FastifyReply) {
   const getPetsParamsSchema = z.object({
     pet_id: z.string(),
   })
@@ -11,11 +11,13 @@ export async function GetPets(request: FastifyRequest, reply: FastifyReply) {
   const { pet_id } = getPetsParamsSchema.parse(request.params)
 
   try {
-    const getPetsUseCase = makeGetPetsUseCase()
+    const getPetsUseCase = makeGetPetUseCase()
 
-    await getPetsUseCase.execute(pet_id)
+    const pet = await getPetsUseCase.execute(pet_id)
 
-    return reply.status(200).send()
+    return reply.status(200).send({
+      pet,
+    })
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       return reply.status(400).send({ message: err.message })

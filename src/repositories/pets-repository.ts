@@ -4,6 +4,7 @@ import {
   PetEnergyLevel,
   PetIndependenceLevel,
   PetSize,
+  PetSpaceNeed,
   Prisma,
 } from '@prisma/client'
 
@@ -12,6 +13,7 @@ export interface FilterValues {
   petSize: PetSize
   petEnergyLevel: PetEnergyLevel
   petIndependenceLevel: PetIndependenceLevel
+  petSpaceNeed: PetSpaceNeed
 }
 
 export interface PetsRepository {
