@@ -17,9 +17,22 @@ export async function authentication(
   const authenticationUseCase = makeAuthenticationUseCase()
 
   try {
-    await authenticationUseCase.execute({
+    const { organization } = await authenticationUseCase.execute({
       email,
       password,
+    })
+
+    const token = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: organization.id,
+        },
+      },
+    )
+
+    return reply.status(200).send({
+      token,
     })
   } catch (err) {
     if (err instanceof OrganizationEmailAlreadyExistsError) {
@@ -28,6 +41,4 @@ export async function authentication(
 
     throw err
   }
-
-  return reply.status(201).send()
 }
