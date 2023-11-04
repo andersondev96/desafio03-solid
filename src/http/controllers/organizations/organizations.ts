@@ -14,6 +14,7 @@ export async function organization(
     address: z.string(),
     latitude: z.number(),
     longitude: z.number(),
+    city: z.string(),
     whatsapp: z.string(),
     password: z.string().min(6),
   })
@@ -25,6 +26,7 @@ export async function organization(
     address,
     latitude,
     longitude,
+    city,
     whatsapp,
     password,
   } = registerBodySchema.parse(request.body)
@@ -39,6 +41,7 @@ export async function organization(
       address,
       latitude,
       longitude,
+      city,
       whatsapp,
       password,
     })
